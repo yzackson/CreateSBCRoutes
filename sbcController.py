@@ -1,3 +1,4 @@
+from operator import concat
 import pandas as pd
 import time
 from selenium.webdriver.common.keys import Keys
@@ -17,7 +18,7 @@ def doLogin(driver, login, password):
 
 def newNAP(driver, lojas, countLoja):
     #Clicar em "Nova NAP"
-    driver.find_element_by_xpath("//*[@id=\"menu-naps-gw\"]").click()
+    driver.find_element_by_id("menu-naps-gw").click()
     time.sleep(1)
     driver.find_element_by_xpath("//*[@id=\"NAPsDivForm\"]/input").click()
     time.sleep(1)
@@ -49,3 +50,31 @@ def newNAP(driver, lojas, countLoja):
     
     #salvar
     driver.find_element_by_xpath("//*[@id=\"NAPsDivForm\"]/div[2]/input[2]").send_keys(Keys.ENTER)
+
+
+
+def newRoute(driver, lojas, countLoja) :
+    # clicar em "Nova Rota"
+    driver.find_element_by_id("menu-routes-gw").click()
+    time.sleep(1)
+    driver.find_element_by_xpath("//*[@id=\"gateway-route\"]/input").click()
+    time.sleep(1)
+
+    # Preencher Nome = In_ + nome
+    driver.find_element_by_id("gateway-route-form-name").send_keys(concat("In_", lojas["Nome"][countLoja]))
+
+    # Preencher NAP origem = Qualquer
+    obj = driver.find_element_by_id("gateway-route-form-origin-nap")
+    selectObj = Select(obj)
+    selectObj.select_by_value("<ANY>")
+
+    # preencher Número de B = Número dos ramais das lojas no formaro correto
+    driver.find_element_by_id("gateway-route-form-called").send_keys(lojas["Ramais"][countLoja])
+
+    # preencher NAP Destino = mesma que do nome
+    obj = driver.find_element_by_id("gateway-route-form-destination-nap")
+    selectObj = Select(obj)
+    selectObj.select_by_value(concat("SIP>", lojas["Nome"][countLoja]))
+
+    # salvar
+    driver.find_element_by_xpath("//*[@id=\"gateway-route-form-save\"]").send_keys(Keys.ENTER)
