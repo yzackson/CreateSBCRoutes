@@ -7,7 +7,7 @@ This bot was made to automate the creation of an huge amount of naps and routes 
 ---
 * [Python v3.x](https://www.python.org/downloads/)
 * [Pandas](https://pandas.pydata.org/) and [Selenium](https://pypi.org/project/selenium/) libraries.
-* Google Chrome version 97 (no other chrome version will work until change the webdriver)
+* Google Chrome version 97 (no other chrome version will work until change the [webdriver version](https://chromedriver.chromium.org/downloads) too)
 * Stable connection to the Khomp SBC
 <br>
 <br>
