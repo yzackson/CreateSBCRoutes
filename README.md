@@ -11,12 +11,14 @@ This bot was made to automate the creation of an huge amount of naps and routes 
 * Stable connection to the Khomp SBC
 <br>
 <br>
+
 ## How to run
 ---
 1. Open the terminal or a program that runs python code
 2. Navigate tyo the folder where the files are
 
-    ![Navigate to folder](https://i.pinimg.com/originals/2a/32/ef/2a32ef1b9df94a6ee72594bd9cf14545.jpg)
+    ![Navigate](https://i.pinimg.com/originals/2a/32/ef/2a32ef1b9df94a6ee72594bd9cf14545.jpg)
+
 3. Type ``python3 dott.py``
 4. Insert the login, password, SBC IP and path of the branchs file then press enter.
 
