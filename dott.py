@@ -16,7 +16,7 @@ path = input("File name of branchs list (.xlsx file): ")
 
 options = webdriver.ChromeOptions()
 options.add_argument('ignore-certificate-errors')
-driver = webdriver.Chrome("./chromedriver97.exe", chrome_options=options)
+driver = webdriver.Chrome("./chromedriver.exe", chrome_options=options)
 
 url = "https://" + ip + "/?language=pt-br"
 
