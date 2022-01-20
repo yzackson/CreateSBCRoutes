@@ -6,57 +6,53 @@ import sbcController
 import logging
 from selenium import webdriver
 
+# Logging config
 logging.basicConfig(filename="logging.log", level=logging.INFO, format="%(asctime)s | %(levelno)s | %(levelname)s | %(message)s")
-lojas = pandas.read_excel("./lojas.xlsx")
+
+login = input("Login: ")
+password = input("Password: ")
+ip = input("SBC IP adrress (xxx.xxx.xxx.xxx): ")
+path = input("File name of branchs list (.xlsx file): ")
 
 options = webdriver.ChromeOptions()
 options.add_argument('ignore-certificate-errors')
-driver = webdriver.Chrome("../Drivers/chromedriver97.exe", chrome_options=options)
+driver = webdriver.Chrome("./chromedriver97.exe", chrome_options=options)
 
-login = "admin"
-password = "Gene7790"
-ip = "10.7.4.11"
 url = "https://" + ip + "/?language=pt-br"
 
-# Acessa o site
+# Access website
 driver.get(url)
 time.sleep(3)
 
-# Fazer login
+# Do login
 sbcController.doLogin(driver, login, password)
 time.sleep(2)
 
-i = 37
-j = 37
+i = 0 # row count
 
-while i < 48:
+while i < (lojas["Nome"].length - 1):
     logging.info("#################################################################")
     logging.info("Adicionando loja - Nome: " + str(i) + "." + lojas["Nome"][i])
-    ########## NAPs ##########
-    logging.info("Criando NAP...")
-    # Acessar página de NAPs
+
+    # Access NAPs/Routes page
     driver.get("https://" + ip + "/KWebConfig/index.php")
     time.sleep(1)
-    # Criar NAPs
+    
+    ########## Create NAP ##########
+    logging.info("Creating NAP...")
     sbcController.newNAP(driver, lojas, i)
     time.sleep(1)
-    #logging.info("NAP criada")
 
-    ########## Rotas ########## 
-    # Acessar a página de rotas
-    #driver.get("https://" + ip + "/KWebConfig/index.php")
-    #time.sleep(1)
-    # Criar rotas
-    logging.info("Criando Rota")
+    ########## Create Route ##########
+    logging.info("Creating Rota")
     sbcController.newRoute(driver, lojas, i)
     time.sleep(1)
-    #logging.info("Rota Criada")
     
-    # Loja criada
+    # logging the branch created
     logging.info(" Loja adicionada")
-    logging.info("Nome: " + lojas["Nome"][i])
-    logging.info("Dominio: " + lojas["Dominio"][i])
-    logging.info("Ramais: " + lojas["Ramais"][i])
+    logging.info("Name: " + lojas["Nome"][i])
+    logging.info("Domain: " + lojas["Dominio"][i])
+    logging.info("Sets range: " + lojas["Ramais"][i])
     i += 1
 
 driver.close()
